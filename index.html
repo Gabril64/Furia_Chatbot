@@ -1,0 +1,474 @@
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FURIA - Assistente Virtual</title>
+    <link rel="icon" type="image/png" href="imagens/furia-favicon.png" sizes="16x16" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        font-size: 16px;
+        --furia-blue: #0088cc;
+        --furia-dark-blue: #007ab3;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        background-color: #ffffff;
+        color: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      header {
+        width: 100%;
+        position: relative;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-sizing: border-box;
+      }
+
+      .header-content {
+        width: 95%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+
+      nav {
+        display: flex;
+        gap: clamp(0.8rem, 2.5vw, 1.6rem);
+        align-items: center;
+        width: 35%;
+        margin-right: 10%;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: color 0.3s;
+        white-space: nowrap;
+      }
+
+      nav a:hover {
+        color: var(--furia-blue);
+      }
+
+      nav a.furia {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      
+      .logo-furia {
+          height: 32px;
+          width: auto;
+      }
+
+      .icons {
+        display: flex;
+        gap: clamp(0.8rem, 2.5vw, 1.2rem);
+        align-items: center;
+        width: 40%;
+        justify-content: flex-end;
+        padding-right: 3%;
+      }
+
+      .icons a {
+        cursor: pointer;
+        transition: transform 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .icons a:hover {
+        transform: scale(1.1);
+      }
+      
+      .icon {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--furia-blue);
+        color: white;
+        font-size: 0.7rem;
+        font-weight: bold;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .cart-count.show {
+        opacity: 1;
+      }
+
+      main {
+        width: 90%;
+        max-width: 40rem;
+        text-align: center;
+        margin: 4rem auto;
+        padding: 2rem 5%;
+        flex: 1;
+        box-sizing: border-box;
+      }
+
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        margin-bottom: 1.5rem;
+        color: #333;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+      }
+
+      p {
+        font-size: clamp(1rem, 3vw, 1.1rem);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        color: #555;
+        font-weight: 500;
+      }
+
+      .botao-telegram {
+        background-color: var(--furia-blue);
+        color: white;
+        font-size: clamp(1.1rem, 3vw, 1.2rem);
+        padding: 1rem clamp(1.5rem, 5vw, 2.5rem);
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0, 136, 204, 0.3);
+        margin-bottom: 3rem;
+      }
+
+      .botao-telegram:hover {
+        background-color: var(--furia-dark-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 136, 204, 0.4);
+      }
+
+      
+
+      .sponsors {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: nowrap;
+          gap: 15px;
+          margin-top: 5rem;
+          padding: 1.5rem 0;
+          border-top: 1px solid #eee;
+      }
+      
+      .sponsors img {
+          max-height: 40px;
+          max-width: 20%;
+          width: auto;
+          object-fit: contain;
+          transition: filter 0.3s;
+      }
+
+      .sponsors img:hover {
+          filter: brightness(0.8);
+      }
+
+      footer {
+          width: 100%;
+          padding: 1.5rem 0;
+          background-color: #f8f8f8;
+          text-align: center;
+      }
+      
+      .footer-links {
+          display: flex;
+          justify-content: center;
+          gap: 2rem;
+      }
+      
+      .footer-links a {
+          color: #555;
+          text-decoration: none;
+          font-size: 0.9rem;
+          font-weight: 500;
+          transition: color 0.3s;
+      }
+      
+      .footer-links a:hover {
+          color: var(--furia-blue);
+      }
+
+      /* Menu mobile */
+      .menu-mobile {
+        display: none;
+        cursor: pointer;
+      }
+
+      .menu-mobile div {
+        width: 25px;
+        height: 3px;
+        background-color: #333;
+        margin: 5px 0;
+        transition: all 0.3s;
+      }
+
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background-color: #333;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        opacity: 0;
+        transition: all 0.5s;
+      }
+
+      .notification.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+
+      @media (max-width: 768px) {
+        .header-content {
+          width: 95%;
+        }
+        
+        .menu-mobile {
+          display: block;
+          margin-right: 10px;
+        }
+
+        .menu-mobile.active div:nth-child(1) {
+          transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-mobile.active div:nth-child(2) {
+          opacity: 0;
+        }
+
+        .menu-mobile.active div:nth-child(3) {
+          transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        nav {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: #fff;
+          flex-direction: column;
+          align-items: center;
+          padding: 1rem 0;
+          box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+          transform: translateY(-150%);
+          transition: transform 0.3s;
+          z-index: 50;
+        }
+
+        nav.active {
+          transform: translateY(0);
+        }
+        
+        nav a {
+          font-size: 1rem;
+          padding: 0.8rem 0;
+          width: 100%;
+          text-align: center;
+        }
+
+        nav a.furia {
+          position: static;
+          transform: none;
+          margin: 0.5rem 0;
+        }
+        
+        .logo-furia {
+          height: 28px;
+        }
+
+        .icons {
+          width: auto;
+          gap: 1rem;
+          margin-left: auto;
+        }
+        
+        .icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        main {
+          margin-top: 2rem;
+          padding: 1.5rem 1rem;
+        }
+
+        .feature {
+          flex: 1 1 100%;
+        }
+        
+        .sponsors {
+          gap: 10px;
+        }
+        
+        .sponsors img {
+          max-height: 30px;
+        }
+        
+        .footer-links {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <div class="menu-mobile" id="menu-toggle">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <nav id="main-nav">
+          <a href="#">Shop all &gt;</a>
+          <a href="#">Collections &gt;</a>
+          <a href="#">Outlet</a>
+          <a href="#" class="furia">
+            <img src="imagens/furia-logo.webp" alt="FURIA" class="logo-furia">
+          </a>
+        </nav>
+        <div class="icons">
+          <a href="#" id="search-icon">
+            <img src="imagens/lupa.png" alt="Busca" class="icon">
+          </a>
+          <a href="#" id="favorites-icon">
+            <img src="imagens/coracao.png" alt="Favoritos" class="icon">
+          </a>
+          <a href="#" id="profile-icon">
+            <img src="imagens/pessoa.png" alt="Perfil" class="icon">
+          </a>
+          <a href="#" id="cart-icon">
+            <img src="imagens/carrinho.png" alt="Carrinho" class="icon">
+            <span class="cart-count" id="cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <p>Fala Furioso, quer ficar por dentro de todos os jogos, notícias tudo de forma interativa na palma da sua mão?</p>
+      <p>Que tal conversar com nosso assistente virtual pelo Telegram?</p>
+      <h1>Basta clicar em conversar:</h1>
+      <a class="botao-telegram" href="https://t.me/furiaboy_bot" target="_blank" id="telegram-button">Conversar</a>
+      
+
+      
+      <div class="sponsors">
+        <img src="imagens/adidas.webp" alt="Adidas" />
+        <img src="imagens/cs.webp" alt="Cruzeiro do Sul Virtual" />
+        <img src="imagens/lenovo.webp" alt="Lenovo Legion" />
+        <img src="imagens/ps.webp" alt="PokerStars" />
+      </div>
+    </main>
+
+    <div class="notification" id="notification">
+      Adicionado ao carrinho!
+    </div>
+
+    <footer>
+      <div class="footer-links">
+        <a href="#">Termos de Uso</a>
+        <a href="#">Política de Privacidade</a>
+        <a href="#">© 2025 FURIA</a>
+      </div>
+    </footer>
+
+    <script>
+      const menuToggle = document.getElementById('menu-toggle');
+      const mainNav = document.getElementById('main-nav');
+      
+      menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        mainNav.classList.toggle('active');
+      });
+
+      const cartIcon = document.getElementById('cart-icon');
+      const cartCount = document.getElementById('cart-count');
+      const notification = document.getElementById('notification');
+      let count = 0;
+
+      cartIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        count++;
+        cartCount.textContent = count;
+        cartCount.classList.add('show');
+        
+        notification.classList.add('show');
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 2000);
+      });
+
+      const telegramButton = document.getElementById('telegram-button');
+      telegramButton.addEventListener('click', () => {
+        console.log('Botão do Telegram clicado');
+      });
+
+      const features = document.querySelectorAll('.feature');
+      features.forEach(feature => {
+        feature.addEventListener('mouseover', () => {
+          features.forEach(f => {
+            if (f !== feature) {
+              f.style.opacity = '0.7';
+            }
+          });
+        });
+        
+        feature.addEventListener('mouseout', () => {
+          features.forEach(f => {
+            f.style.opacity = '1';
+          });
+        });
+      });
+    </script>
+  </body>
+  </html>
