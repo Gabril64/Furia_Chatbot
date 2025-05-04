@@ -18,7 +18,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 load_dotenv()
-TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN') or "7559909274:AAEj4U6xGXz0PBgXMiFvkNNqbfkiD3OJTJo"
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN') or 'Digite aqui seu Token' # Deverá ser digitado o seu Token entre as aspas.
 if not TELEGRAM_BOT_TOKEN:
     logger.error("Token do Telegram não encontrado no arquivo .env")
     raise ValueError("Token do Telegram não configurado. Adicione TELEGRAM_BOT_TOKEN ao arquivo .env")
